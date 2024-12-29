@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 // import { log } from 'react-native-reanimated';
 import axios from 'axios';
 import { loginUser, useAuthContext } from '../../context/AuthContext';
+import Toast from 'react-native-toast-message';
 
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -20,14 +21,18 @@ function Login() {
     const handleSubmit = async () => {
 
         await loginUser(email, password, dispatch);
-                        navigation.navigate('Home');
-                                                    AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
-
+        // navigation.navigate('Home');
+        AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+Toast.show({
+        type: 'success',
+        text2: 'User loggedIn successfully',
+        visibilityTime: 10000,
+      });
 
         Alert.alert('Logged In Successfull');
 
-      };
-    
+    };
+
 
     // function handleSubmit() {
     //     console.log(email, password);

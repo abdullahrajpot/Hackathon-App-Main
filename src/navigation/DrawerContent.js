@@ -156,12 +156,14 @@ import { Avatar, Title } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/Entypo';
 import { useAuthContext, logoutUser } from '../context/AuthContext';
+import Toast from 'react-native-toast-message';
 
 const DrawerList = [
   { icon: 'home-outline', label: 'Home', navigateTo: 'Home' },
   { icon: 'account-multiple', label: 'Profile', navigateTo: 'Profile' },
-  { icon: 'account-group', label: 'Cart', navigateTo: 'Cart' },
+  { icon: 'plus', label: 'Add Event', navigateTo: 'AddItems' },
   { icon: 'bookshelf', label: 'Shop', navigateTo: 'Shop' },
 ];
 
@@ -192,7 +194,13 @@ function DrawerContent(props) {
 
   function signOut() {
     logoutUser(dispatch); // Call logoutUser from context
+
     navigation.navigate('LoginUser'); // Navigate to Login screen after sign-out
+    Toast.show({
+        type: 'error',
+        text2: 'User logged out successfully',
+        visibilityTime: 5000,
+      });
   }
 
   return (
@@ -204,7 +212,7 @@ function DrawerContent(props) {
               <View style={{ flexDirection: 'row', marginTop: 15 }}>
                 <Avatar.Image
                   source={{
-                    uri: 'https://randomuser.me/api/portraits/men/41.jpg',
+                    uri: user ? user.image : 'https://randomuser.me/api/portraits/men/41.jpg', // Use user image if logged in, else use default image
                   }}
                   size={50}
                   style={{ marginTop: 5 }}
