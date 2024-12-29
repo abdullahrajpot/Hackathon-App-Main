@@ -1,7 +1,13 @@
+
+
+
+
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import axios from 'axios';
 import { useIsFocused } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import FontAwesome for icons
 
 export default function Events({ route }) {
     const [items, setItems] = useState([]);
@@ -11,7 +17,7 @@ export default function Events({ route }) {
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get("http://172.16.50.49:5003/get-events");
+            const response = await axios.get("http://192.168.18.34:5003/get-events");
             if (response.data.status === 'ok') {
                 setItems(response.data.items);
             } else {
@@ -35,7 +41,7 @@ export default function Events({ route }) {
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color="#3b5998" />
             </View>
         );
     }
@@ -50,7 +56,7 @@ export default function Events({ route }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Events</Text>
+            <Text style={styles.title}>Upcoming Events</Text>
             <FlatList
                 data={items}
                 keyExtractor={(item) => item._id}
@@ -58,9 +64,24 @@ export default function Events({ route }) {
                     <View style={styles.itemContainer}>
                         <Text style={styles.itemName}>{item.title}</Text>
                         <Text style={styles.itemDate}>Date: {item.date}</Text>
+
+                        {/* Description Section */}
+                        <Text style={styles.sectionHeading}>
+                            <Icon name="file-text" size={16} color="#ff6347" /> Description
+                        </Text>
                         <Text style={styles.itemDescription}>{item.description}</Text>
-                        <Text style={styles.itemLocation}>Location: {item.location}</Text>
-                        <Text style={styles.itemCategory}>Category: {item.category}</Text>
+
+                        {/* Location Section */}
+                        <Text style={styles.sectionHeading}>
+                            <Icon name="location-arrow" size={16} color="#4CAF50" /> Location
+                        </Text>
+                        <Text style={styles.itemLocation}>{item.location}</Text>
+
+                        {/* Category Section */}
+                        <Text style={styles.sectionHeading}>
+                            <Icon name="tag" size={16} color="#f39c12" /> Category
+                        </Text>
+                        <Text style={styles.itemCategory}>{item.category}</Text>
                     </View>
                 )}
             />
@@ -69,15 +90,77 @@ export default function Events({ route }) {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16, backgroundColor: '#f0f8ff' },
-    title: { fontSize: 24, fontWeight: 'bold', marginBottom: 16 },
-    itemContainer: { padding: 16, marginVertical: 8, borderWidth: 1, borderColor: '#ccc', borderRadius: 4, backgroundColor: '#fff' },
-    itemName: { fontSize: 18, fontWeight: 'bold' },
-    itemDate: { fontSize: 16, color: 'green' },
-    itemDescription: { fontSize: 14, color: '#555' },
-    itemLocation: { fontSize: 14, color: '#555' },
-    itemCategory: { fontSize: 14, color: '#555' },
-    loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-    errorContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-    errorText: { color: 'red', fontSize: 16 },
+    container: { 
+        flex: 1, 
+        padding: 16, 
+        backgroundColor: '#f7f7f7' 
+    },
+    title: { 
+        fontSize: 26, 
+        fontWeight: 'bold', 
+        marginBottom: 20, 
+        color: '#333',
+        textAlign: 'center'
+    },
+    itemContainer: { 
+        padding: 20, 
+        marginVertical: 12, 
+        borderRadius: 12, 
+        backgroundColor: '#fff',
+        borderColor: '#e4e4e4', 
+        borderWidth: 1,
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowOpacity: 0.1, 
+        shadowRadius: 5,
+        elevation: 3,
+    },
+    itemName: { 
+        fontSize: 20, 
+        fontWeight: '600', 
+        color: '#333',
+        marginBottom: 8 
+    },
+    itemDate: { 
+        fontSize: 16, 
+        color: '#4CAF50', 
+        marginBottom: 6
+    },
+    sectionHeading: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 4,
+        color: '#333',
+    },
+    itemDescription: { 
+        fontSize: 14, 
+        color: '#555', 
+        marginBottom: 6
+    },
+    itemLocation: { 
+        fontSize: 14, 
+        color: '#777', 
+        marginBottom: 6 
+    },
+    itemCategory: { 
+        fontSize: 14, 
+        color: '#888', 
+        marginBottom: 10
+    },
+    loadingContainer: { 
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center' 
+    },
+    errorContainer: { 
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center' 
+    },
+    errorText: { 
+        color: '#f44336', 
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
 });

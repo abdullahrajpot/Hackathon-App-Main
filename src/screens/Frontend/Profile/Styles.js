@@ -22,7 +22,18 @@ export default StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     marginTop: 30,
+    marginHorizontal:30,
+    paddingVertical:20,
+    paddingHorizontal:10,
+    backgroundColor:'#24243E',
+    borderRadius:10,
+    fontWeight:'large'
+
   },
+  saveButtonText:{
+    color:'white'
+  },
+  
   textSign: {
     fontSize: 18,
     fontWeight: '600',
@@ -37,7 +48,7 @@ export default StyleSheet.create({
     borderRadius: 50,
   },
   header: {
-    backgroundColor: '#0163D2',
+    backgroundColor: '#24243E',
     flexDirection: 'row',
     height: 60,
     justifyContent: 'center',

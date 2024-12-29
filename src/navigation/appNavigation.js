@@ -31,7 +31,7 @@ const StackNav = () => {
                         {
                             statusBarColor: 'blue',
                             headerStyle: {
-                                backgroundColor: 'blue'
+                                backgroundColor: '#24243E'
                             },
                             headerTintColor: 'white',
                             headerTitleAlign: 'center',
@@ -48,9 +48,9 @@ const StackNav = () => {
                         }
                     }
                     name='Home' component={Home} />
-                    <Stack.Screen name='Profile' component={UpdateProfile} />
-                    <Stack.Screen name='AddItems' component={AddItems} />
-                    <Stack.Screen name='Events' component={Events} />
+                    <Stack.Screen options={{headerShown:false}} name='Profile' component={UpdateProfile} />
+                    <Stack.Screen options={{headerShown:false}} name='AddItems' component={AddItems} />
+                    <Stack.Screen options={{headerShown:false}} name='Events' component={Events} />
                     <Stack.Screen options={{headerShown:false}} name='LoginUser' component={LoginNav} />
 
             </Stack.Group>

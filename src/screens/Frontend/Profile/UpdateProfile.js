@@ -63,7 +63,7 @@ function UpdateProfile() {
     console.log(formData); // For debugging, check the form data
 
     axios
-      .post('http://172.16.50.49:5003/update-user', formData)
+      .post('http://192.168.18.34:5003/update-user', formData)
       .then(res => {
         console.log(res.data);
         if (res.data.status === "Ok") {

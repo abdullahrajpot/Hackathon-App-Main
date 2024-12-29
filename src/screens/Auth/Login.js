@@ -19,19 +19,17 @@ function Login() {
 
     const handleSubmit = async () => {
         if (!email || !password) {
-          Toast.show({
-            type: 'error',
-            text2: 'Please enter both email and password.',
-            visibilityTime: 10000,
-          });
-          return;
+            Toast.show({
+                type: 'error',
+                text2: 'Please enter both email and password.',
+                visibilityTime: 10000,
+            });
+            return;
         }
     
-        await loginUser(email, password, dispatch);
-        // navigation.navigate("Home")
-
-       
-      };
+        // Call the loginUser function with email, password, dispatch, and navigation
+        await loginUser(email, password, dispatch, navigation);
+    };
 
 
     // function handleSubmit() {

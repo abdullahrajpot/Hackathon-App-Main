@@ -1,6 +1,11 @@
+
+
+
+
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';  // Importing FontAwesome icons
 
 export default function AddEvent() {
     const [title, setTitle] = useState('');
@@ -12,27 +17,30 @@ export default function AddEvent() {
 
     const handleAddEvent = async () => {
         const newErrors = {};
-
+    
         if (!title) newErrors.title = 'Title is required';
         if (!description) newErrors.description = 'Description is required';
         if (!date) newErrors.date = 'Date is required';
         if (!location) newErrors.location = 'Location is required';
         if (!category) newErrors.category = 'Category is required';
-
+    
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
         }
-
+    
         try {
-            const response = await axios.post("http://172.16.50.49:5003/add-event", {
+            const token = 'your-jwt-token';  // Make sure this token is stored in your app, e.g., after login
+    
+            const response = await axios.post("http://192.168.18.34:5003/add-event", {
                 title,
                 description,
                 date,
                 location,
                 category,
+                token,  // Add the token in the request body
             });
-
+    
             if (response.data.status === 'ok') {
                 Alert.alert('Success', 'Event added successfully');
                 setTitle('');
@@ -54,48 +62,65 @@ export default function AddEvent() {
         <View style={styles.container}>
             <Text style={styles.title}>Add Event</Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Enter Title"
-                value={title}
-                onChangeText={(val) => setTitle(val)}
-            />
+            <View style={styles.inputContainer}>
+                <Icon name="edit" size={20} color="#3b5998" style={styles.icon} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter Title"
+                    value={title}
+                    onChangeText={(val) => setTitle(val)}
+                />
+            </View>
             {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
 
-            <TextInput
-                style={styles.input}
-                placeholder="Enter Description"
-                value={description}
-                onChangeText={(val) => setDescription(val)}
-            />
+            <View style={styles.inputContainer}>
+                <Icon name="file-text" size={20} color="#ff6347" style={styles.icon} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter Description"
+                    value={description}
+                    onChangeText={(val) => setDescription(val)}
+                />
+            </View>
             {errors.description && <Text style={styles.errorText}>{errors.description}</Text>}
 
-            <TextInput
-                style={styles.input}
-                placeholder="Enter Date (YYYY-MM-DD)"
-                value={date}
-                onChangeText={(val) => setDate(val)}
-            />
+            <View style={styles.inputContainer}>
+                <Icon name="calendar" size={20} color="#4CAF50" style={styles.icon} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter Date (YYYY-MM-DD)"
+                    value={date}
+                    onChangeText={(val) => setDate(val)}
+                />
+            </View>
             {errors.date && <Text style={styles.errorText}>{errors.date}</Text>}
 
-            <TextInput
-                style={styles.input}
-                placeholder="Enter Location"
-                value={location}
-                onChangeText={(val) => setLocation(val)}
-            />
+            <View style={styles.inputContainer}>
+                <Icon name="location-arrow" size={20} color="#f39c12" style={styles.icon} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter Location"
+                    value={location}
+                    onChangeText={(val) => setLocation(val)}
+                />
+            </View>
             {errors.location && <Text style={styles.errorText}>{errors.location}</Text>}
 
-            <TextInput
-                style={styles.input}
-                placeholder="Enter Category"
-                value={category}
-                onChangeText={(val) => setCategory(val)}
-            />
+            <View style={styles.inputContainer}>
+                <Icon name="tag" size={20} color="#8e44ad" style={styles.icon} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter Category"
+                    value={category}
+                    onChangeText={(val) => setCategory(val)}
+                />
+            </View>
             {errors.category && <Text style={styles.errorText}>{errors.category}</Text>}
 
             <View style={styles.buttonContainer}>
-                <Button title="Add Event" onPress={handleAddEvent} />
+                <TouchableOpacity style={styles.button} onPress={handleAddEvent}>
+                    <Text style={styles.buttonText}>Add Event</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -110,26 +135,53 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f8ff',
     },
     title: {
-        fontSize: 40,
+        fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: 16,
+        marginBottom: 30,
+        color: '#333',
     },
-    input: {
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 4,
-        marginBottom: 10,
+        borderRadius: 8,
+        marginBottom: 15,
         width: '100%',
-        padding: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
         backgroundColor: '#fff',
+    },
+    icon: {
+        marginRight: 10,
+    },
+    input: {
+        flex: 1,
+        height: 40,
+        fontSize: 16,
+        color: '#333',
     },
     buttonContainer: {
         width: '100%',
-        marginTop: 10,
+        marginTop: 20,
+    },
+    button: {
+        backgroundColor: '#24243E',
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        width: '100%',
+        alignItems: 'center',
+    },
+    buttonText: {
+        fontSize: 18,
+        color: '#fff',
+        fontWeight: 'bold',
     },
     errorText: {
-        color: 'red',
+        color: '#e74c3c',
         fontSize: 12,
-        marginBottom: 10,
+        marginTop: 5,
+        marginLeft: 30,
     },
 });

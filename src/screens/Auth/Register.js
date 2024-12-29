@@ -37,7 +37,7 @@ function Register() {
         return Alert.alert('Invalid Admin');
       }
       axios
-        .post('http://172.16.50.49:5003/register', userData)
+        .post('http://192.168.18.34:5003/register', userData)
         .then(res => {
           console.log(res.data);
           if (res.data.status == 'ok') {
@@ -115,42 +115,7 @@ function Register() {
         <View style={styles.loginContainer}>
           <Text style={styles.text_header}>Register!!!</Text>
 
-          {/* <View style={styles.radioButton_div}>
-            <Text style={styles.radioButton_title}> Login as</Text>
-            <View style={styles.radioButton_inner_div}>
-              <Text style={styles.radioButton_text}>User</Text>
-              <RadioButton
-                value="User"
-                status={userType == 'User' ? 'checked' : 'unchecked'}
-                onPress={() => setUserType('User')}
-              />
-            </View>
-            <View style={styles.radioButton_inner_div}>
-              <Text style={styles.radioButton_text}>Admin</Text>
-              <RadioButton
-                value="Admin"
-                status={userType == 'Admin' ? 'checked' : 'unchecked'}
-                onPress={() => setUserType('Admin')}
-              />
-            </View>
-          </View>
-
-          {userType == 'Admin' ? (
-            <View style={styles.action}>
-              <FontAwesome
-                name="user-o"
-                color="#420475"
-                style={styles.smallIcon}
-              />
-              <TextInput
-                placeholder="Secret Text"
-                style={styles.textInput}
-                onChange={e => setSecretText(e.nativeEvent.text)}
-              />
-            </View>
-          ) : (
-            ''
-          )} */}
+        
 
           <View style={styles.action}>
             <FontAwesome
