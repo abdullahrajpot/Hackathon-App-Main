@@ -115,7 +115,7 @@ function Register() {
         <View style={styles.loginContainer}>
           <Text style={styles.text_header}>Register!!!</Text>
 
-          <View style={styles.radioButton_div}>
+          {/* <View style={styles.radioButton_div}>
             <Text style={styles.radioButton_title}> Login as</Text>
             <View style={styles.radioButton_inner_div}>
               <Text style={styles.radioButton_text}>User</Text>
@@ -150,7 +150,7 @@ function Register() {
             </View>
           ) : (
             ''
-          )}
+          )} */}
 
           <View style={styles.action}>
             <FontAwesome

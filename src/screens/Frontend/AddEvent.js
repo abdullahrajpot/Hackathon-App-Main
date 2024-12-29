@@ -3,21 +3,20 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 
 export default function AddEvent() {
-    // State variables
-    const [productName, setProductName] = useState('');
-    const [price, setPrice] = useState('');
+    const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [date, setDate] = useState('');
+    const [location, setLocation] = useState('');
     const [category, setCategory] = useState('');
     const [errors, setErrors] = useState({});
 
-    // Function to handle adding item
-    const handleAddItem = async () => {
+    const handleAddEvent = async () => {
         const newErrors = {};
 
-        // Validate inputs
-        if (!productName) newErrors.productName = 'Product Name is required';
-        if (!price) newErrors.price = 'Price is required';
+        if (!title) newErrors.title = 'Title is required';
         if (!description) newErrors.description = 'Description is required';
+        if (!date) newErrors.date = 'Date is required';
+        if (!location) newErrors.location = 'Location is required';
         if (!category) newErrors.category = 'Category is required';
 
         if (Object.keys(newErrors).length > 0) {
@@ -25,24 +24,25 @@ export default function AddEvent() {
             return;
         }
 
-        // Making the request to add item
         try {
-            const response = await axios.post("http://172.16.50.49:5003/add-item", {
-                productName,
-                price: parseFloat(price),
+            const response = await axios.post("http://172.16.50.49:5003/add-event", {
+                title,
                 description,
+                date,
+                location,
                 category,
             });
 
             if (response.data.status === 'ok') {
-                Alert.alert('Success', 'Item added successfully');
-                setProductName('');
-                setPrice('');
+                Alert.alert('Success', 'Event added successfully');
+                setTitle('');
                 setDescription('');
+                setDate('');
+                setLocation('');
                 setCategory('');
                 setErrors({});
             } else {
-                Alert.alert('Error', response.data.message || 'Failed to add item');
+                Alert.alert('Error', response.data.message || 'Failed to add event');
             }
         } catch (error) {
             console.error("Error:", error);
@@ -52,24 +52,15 @@ export default function AddEvent() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Add Events</Text>
+            <Text style={styles.title}>Add Event</Text>
 
             <TextInput
                 style={styles.input}
                 placeholder="Enter Title"
-                value={productTitle}
-                onChangeText={(val) => setProductName(val)}
+                value={title}
+                onChangeText={(val) => setTitle(val)}
             />
-            {errors.productTitle && <Text style={styles.errorText}>{errors.productTitle}</Text>}
-
-            <TextInput
-                style={styles.input}
-                placeholder="Enter Price"
-                value={price}
-                keyboardType="numeric"
-                onChangeText={(val) => setPrice(val)}
-            />
-            {errors.price && <Text style={styles.errorText}>{errors.price}</Text>}
+            {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
 
             <TextInput
                 style={styles.input}
@@ -81,6 +72,22 @@ export default function AddEvent() {
 
             <TextInput
                 style={styles.input}
+                placeholder="Enter Date (YYYY-MM-DD)"
+                value={date}
+                onChangeText={(val) => setDate(val)}
+            />
+            {errors.date && <Text style={styles.errorText}>{errors.date}</Text>}
+
+            <TextInput
+                style={styles.input}
+                placeholder="Enter Location"
+                value={location}
+                onChangeText={(val) => setLocation(val)}
+            />
+            {errors.location && <Text style={styles.errorText}>{errors.location}</Text>}
+
+            <TextInput
+                style={styles.input}
                 placeholder="Enter Category"
                 value={category}
                 onChangeText={(val) => setCategory(val)}
@@ -88,7 +95,7 @@ export default function AddEvent() {
             {errors.category && <Text style={styles.errorText}>{errors.category}</Text>}
 
             <View style={styles.buttonContainer}>
-                <Button title="Add Item" onPress={handleAddItem} />
+                <Button title="Add Event" onPress={handleAddEvent} />
             </View>
         </View>
     );

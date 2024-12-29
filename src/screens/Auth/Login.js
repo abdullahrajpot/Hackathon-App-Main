@@ -4,7 +4,6 @@ import styles from './styles';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useEffect, useState } from 'react';
-// import { log } from 'react-native-reanimated';
 import axios from 'axios';
 import { loginUser, useAuthContext } from '../../context/AuthContext';
 import Toast from 'react-native-toast-message';
@@ -19,19 +18,20 @@ function Login() {
     const [password, setPassword] = useState('');
 
     const handleSubmit = async () => {
-
+        if (!email || !password) {
+          Toast.show({
+            type: 'error',
+            text2: 'Please enter both email and password.',
+            visibilityTime: 10000,
+          });
+          return;
+        }
+    
         await loginUser(email, password, dispatch);
-        // navigation.navigate('Home');
-        AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
-Toast.show({
-        type: 'success',
-        text2: 'User loggedIn successfully',
-        visibilityTime: 10000,
-      });
+        // navigation.navigate("Home")
 
-        Alert.alert('Logged In Successfull');
-
-    };
+       
+      };
 
 
     // function handleSubmit() {

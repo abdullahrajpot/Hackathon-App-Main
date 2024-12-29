@@ -164,7 +164,7 @@ const DrawerList = [
   { icon: 'home-outline', label: 'Home', navigateTo: 'Home' },
   { icon: 'account-multiple', label: 'Profile', navigateTo: 'Profile' },
   { icon: 'plus', label: 'Add Event', navigateTo: 'AddItems' },
-  { icon: 'bookshelf', label: 'Shop', navigateTo: 'Shop' },
+  { icon: 'bookshelf', label: 'Events', navigateTo: 'Events' },
 ];
 
 const DrawerLayout = ({ icon, label, navigateTo }) => {

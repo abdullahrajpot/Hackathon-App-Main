@@ -6,7 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Entypo';
 import Home from '../screens/Frontend/Home';
 import AddItems from '../screens/Frontend/AddEvent';
-import Shop from '../screens/Frontend/Shop';
+import Events from '../screens/Frontend/Events';
 import {
     NavigationContainer,
     useNavigation,
@@ -50,7 +50,7 @@ const StackNav = () => {
                     name='Home' component={Home} />
                     <Stack.Screen name='Profile' component={UpdateProfile} />
                     <Stack.Screen name='AddItems' component={AddItems} />
-                    <Stack.Screen name='Shop' component={Shop} />
+                    <Stack.Screen name='Events' component={Events} />
                     <Stack.Screen options={{headerShown:false}} name='LoginUser' component={LoginNav} />
 
             </Stack.Group>
